@@ -3,3 +3,4 @@ pandas==2.2.3
 numpy==1.26.0  # or a later compatible version
 plotly==5.9.0
 matplotlib==3.7.0
+psutil
