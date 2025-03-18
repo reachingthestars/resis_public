@@ -1,6 +1,8 @@
 streamlit==1.43.2
 pandas==2.2.3
-numpy==1.26.0  # or a later compatible version
+numpy==1.26.0
 plotly==5.9.0
 matplotlib==3.7.0
 psutil
+xlrd
+openpyxl  
