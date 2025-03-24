@@ -114,6 +114,7 @@ GRAM_NEGATIVE = [
     "Haemophilus influenzae"
 ]
 
+# Original list of antibiotics
 ANTIBIOTICS = [
     "Amicacina", "Amoxicillina/Ac. Clavulânico", "Ampicillina", "Ampicillina/sulbactam",
     "Aztreonam", "Cefepima", "Cefotaxima", "Ceftazidima", "Ceftriaxone", "Cefuroxima",
@@ -128,10 +129,15 @@ ANTIBIOTICS = [
     "Moxifloxacina", "ESBL", "Beta Lactamase", "Colistina", "Caspofungina",
     "Voricanazol", "Micafungina", "Benzylpenicilina", "Ceftolozane/Tazobactam",
     "Etambutol", "Isoniazida", "Estreptomicina", "Pirazinamida", "Daptomicina",
-    "ESBL (Neg)", "Amphotericin B", "Ceftazidime/Avibactam",
+    "ESBL (Neg)", "tericin B", "Ceftazidime/Avibactam",
     "Amoxicillina/Ac. Clavulânico (oral)", "Amoxicillina/Ac. Clavulânico (intravenoso)",
     "Gentamicina (tópico)", "Imipenem/Relebactam"
 ]
+
+# Replace "Amphotericin B" with "Anfotericina"
+ANTIBIOTICS = ["Anfotericina B" if ab == "Amphotericin B" else ab for ab in ANTIBIOTICS]
+
+
 eskape_microorganisms = ["Enterococcus faecium", "Staphylococcus aureus", "Klebsiella pneumoniae", 
                              "Acinetobacter baumannii", "Pseudomonas aeruginosa", "Enterobacter spp."]
 
@@ -142,7 +148,7 @@ CARBAPENEMES = [
     'Doripenem'
 ]
 
-ANTI_MRSA = [
+MRSA = [
     'Vancomicina',
     'Linezolid',
     'Daptomicina',
@@ -213,7 +219,7 @@ ANTIBIOTIC_CLASSES = {
                "Linezolid", "Tigeciclina", "Fluconazol", "Anfotericina B", "Mupirocina", "Colistina", "Caspofungina",
                "Voricanazol", "Micafungina", "Etambutol", "Isoniazida", "Estreptomicina", "Pirazinamida", "Daptomicina"],
     **{antibiotic: 'Carbapenemes' for antibiotic in CARBAPENEMES},
-    **{antibiotic: 'Anti-MRSA' for antibiotic in ANTI_MRSA},
+    **{antibiotic: 'MRSA' for antibiotic in MRSA},
     **{antibiotic: 'Polimixina' for antibiotic in POLIMIXINAS},
     **{antibiotic: 'Cefalosporina (3ª/4ª Geração)' for antibiotic in CEFALOSPORINAS_3A_4A},
     **{antibiotic: 'Amoxicilina/Ácido Clavulânico' for antibiotic in AMOXICILINA_ACIDO_CLAVULANICO},
@@ -439,8 +445,8 @@ def detect_antibiotic_columns(df):
 def classify_antibiotic(antibiotic):
     if antibiotic in CARBAPENEMES:
         return 'Carbapenemes'
-    elif antibiotic in ANTI_MRSA:
-        return 'Anti-MRSA'
+    elif antibiotic in MRSA:
+        return 'MRSA'
     elif antibiotic in POLIMIXINAS:
         return 'Polimixina'
     elif antibiotic in CEFALOSPORINAS_3A_4A:
@@ -479,7 +485,7 @@ def show_product_service_chart(df_cleaned):
                  color='Microorganismo', color_continuous_scale=px.colors.qualitative.Pastel)
     st.plotly_chart(fig)
     
-    # Exibir perfil de resistências
+    # Exibir  de resistências
     st.write("### Perfil de Resistências")
     if not filtered_data.empty:
         resistance_df = calculate_resistance(filtered_data)
@@ -499,7 +505,7 @@ def show_product_service_chart(df_cleaned):
         
         # Gráficos de barras para as classes específicas de antibióticos
         st.write("### Perfil de Resistência para Classes Específicas de Antibióticos")
-        specific_classes = ['Carbapenemes', 'Anti-MRSA', 'Polimixina', 'Cefalosporina (3ª/4ª Geração)', 
+        specific_classes = ['Carbapenemes', 'MRSA', 'Polimixina', 'Cefalosporina (3ª/4ª Geração)', 
                             'Amoxicilina/Ácido Clavulânico', 'Fluoroquinolona', 'Aminoglicosídeo', 
                             'Beta-lactâmico com Inibidor de Beta-lactamase']
         for antibiotic_class in specific_classes:
