@@ -16,7 +16,7 @@ import logging
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 
-# Caminho para o arquivo config.toml
+# config.toml
 def resource_path(relative_path):
     """Get the absolute path to the resource, works for dev and for PyInstaller."""
     try:
@@ -29,19 +29,17 @@ def resource_path(relative_path):
 
 # Carregar o arquivo config.toml
 config_path = resource_path("config.toml")
-os.environ["STREAMLIT_CONFIG_FILE"] = config_path  # Forçar o Streamlit a usar este arquivo de configuração
-
+os.environ["STREAMLIT_CONFIG_FILE"] = config_path  
 # Função para encontrar uma porta livre
 def find_free_port():
     """Find a free port automatically."""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind(("", 0))  # Encontra uma porta disponível automaticamente
+        s.bind(("", 0))  
         return s.getsockname()[1]
 
 STREAMLIT_PORT = find_free_port()
 STREAMLIT_URL = f"http://localhost:{STREAMLIT_PORT}"
 
-# Verificar se a porta está em uso
 def is_port_in_use(port):
     """Check if a specific port is already in use."""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -59,7 +57,7 @@ def is_streamlit_running():
             continue
     return False
 
-# Função para abrir o navegador quando o Streamlit estiver pronto
+# Função para abrir, quando o Streamlit estiver pronto
 def open_browser_once():
     """Opens the browser only once after the server is ready."""
     try:
@@ -68,19 +66,19 @@ def open_browser_once():
             try:
                 response = requests.get(STREAMLIT_URL)
                 if response.status_code == 200:
-                    webbrowser.open(STREAMLIT_URL, new=2)  # Abrir em uma nova aba
+                    webbrowser.open(STREAMLIT_URL, new=2)  
                     logging.info("Navegador aberto com sucesso.")
                     return
             except requests.ConnectionError:
-                time.sleep(1)  # Tentar novamente após 1 segundo
+                time.sleep(1)  
         logging.warning(f"Servidor não está pronto a tempo. Acesse manualmente: {STREAMLIT_URL}")
     except Exception as e:
         logging.error(f"Erro ao abrir o navegador: {e}")
 
-# Lógica principal para evitar múltiplas janelas
+#  evitar múltiplas janelas
 if __name__ == "__main__":
     if not is_streamlit_running():
-        # Iniciar o aplicativo Streamlit
+        # Iniciar  Streamlit
         subprocess.Popen(
             [sys.executable, "-m", "streamlit", "run", os.path.abspath(__file__), "--server.port", str(STREAMLIT_PORT)]
         )
@@ -441,7 +439,7 @@ def detect_antibiotic_columns(df):
     """Identificar as colunas de antibióticos."""
     return [col for col in df.columns if col in ANTIBIOTICS]
 
-# Definição da função classify_antibiotic
+# Definição da função classify_antibiotiC
 def classify_antibiotic(antibiotic):
     if antibiotic in CARBAPENEMES:
         return 'Carbapenemes'
@@ -485,7 +483,7 @@ def show_product_service_chart(df_cleaned):
                  color='Microorganismo', color_continuous_scale=px.colors.qualitative.Pastel)
     st.plotly_chart(fig)
     
-    # Exibir  de resistências
+    # Exibir resistências
     st.write("### Perfil de Resistências")
     if not filtered_data.empty:
         resistance_df = calculate_resistance(filtered_data)
