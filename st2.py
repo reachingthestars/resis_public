@@ -98,13 +98,13 @@ RELEVANT_MICROORGANISMS = [
     "Streptococcus pneumoniae", "Staphylococcus saprophyticus"
 ]
 
-GRAM_POSITIVE = [
+GRAM_POSITIVO = [
     "Enterococcus faecalis", "Enterococcus faecium", "Streptococcus agalactiae",
     "Staphylococcus aureus", "Staphylococcus epidermidis", "Streptococcus pneumoniae",
     "Staphylococcus saprophyticus"
 ]
 
-GRAM_NEGATIVE = [
+GRAM_NEGATIVO = [
     "Acinetobacter baumannii", "Citrobacter species", "Enterobacter species",
     "Escherichia coli", "Klebsiella oxytoca", "Klebsiella pneumoniae",
     "Morganella morganii", "Pseudomonas aeruginosa", "Proteus mirabilis",
@@ -303,9 +303,9 @@ def check_duplicates(df):
 
 def classify_gram_stain(microorganismo):
     """Classificar microorganismos como Gram-positivo ou Gram-negativo."""
-    if microorganismo in GRAM_POSITIVE:
+    if microorganismo in GRAM_POSITIVO:
         return 'Gram-Positivo'
-    elif microorganismo in GRAM_NEGATIVE:
+    elif microorganismo in GRAM_NEGATIVO:
         return 'Gram-Negativo'
     else:
         return 'Unknown'
@@ -518,22 +518,22 @@ def show_product_service_chart(df_cleaned):
         st.write("No resistance data available for the selected criteria.")
 
 
-def process_and_plot_data(df_clean, gram_positive, gram_negative, eskape_microorganisms):
+def process_and_plot_data(df_clean, gram_positivo, gram_negativo, eskape_microorganisms):
     st.header("Análise exploratória dos dados")
 
     # Selecionar a opção para filtrar os dados, ignorando as primeiras nove colunas
-    options = ['Microorganismo', 'Gram-positive', 'Gram-negative', 'ESKAPE', 'Sexo', 'Idade'] + list(df_clean.columns[10:])
+    options = ['Microorganismo', 'Gram-positivo', 'Gram-negativo', 'ESKAPE', 'Sexo', 'Idade'] + list(df_clean.columns[10:])
     groupby_column = st.selectbox('Que deseja verificar?', options)
     st.write(f"Seleção atual: {groupby_column}")
 
     # Filtrar o DataFrame com base na opção selecionada
     if groupby_column == 'Microorganismo':
         df_filtered = df_clean
-    elif groupby_column in ['Gram-positive', 'Gram-negative', 'ESKAPE']:
-        if groupby_column == 'Gram-positive':
-            relevant_microorganisms = gram_positive
-        elif groupby_column == 'Gram-negative':
-            relevant_microorganisms = gram_negative
+    elif groupby_column in ['Gram-positivo', 'Gram-negativo', 'ESKAPE']:
+        if groupby_column == 'Gram-positivo':
+            relevant_microorganisms = gram_positivo
+        elif groupby_column == 'Gram-negativo':
+            relevant_microorganisms = gram_negativo
         else:
             relevant_microorganisms = eskape_microorganisms
         df_filtered = df_clean[df_clean['Microorganismo'].isin(relevant_microorganisms)]
@@ -541,7 +541,7 @@ def process_and_plot_data(df_clean, gram_positive, gram_negative, eskape_microor
         df_filtered = df_clean[df_clean[groupby_column].notnull()]
 
     # Número de ocorrências para cada grupo
-    if groupby_column in ['Microorganismo', 'Gram-positive', 'Gram-negative', 'ESKAPE']:
+    if groupby_column in ['Microorganismo', 'Gram-positivo', 'Gram-negativo', 'ESKAPE']:
         data_counts = df_filtered['Microorganismo'].value_counts().reset_index()
         data_counts.columns = ['Microorganismo', 'Contagem']
     else:
@@ -661,22 +661,22 @@ def process_and_plot_data(df_clean, gram_positive, gram_negative, eskape_microor
     else:
         st.write(f"Nenhum dado encontrado para {microorganismo}, {faixa_etaria}, {sexo}, {servico}, {produto}.")
 
-def process_and_plot_data(df_clean, gram_positive, gram_negative, eskape_microorganisms):
+def process_and_plot_data(df_clean, gram_positivo, gram_negativo, eskape_microorganisms):
     st.header("Análise exploratória dos dados")
 
     # Selecionar a opção para filtrar os dados, ignorando as primeiras nove colunas
-    options = ['Microorganismo', 'Gram-positive', 'Gram-negative', 'ESKAPE', 'Sexo', 'Idade'] + list(df_clean.columns[10:])
+    options = ['Microorganismo', 'Gram-positivo', 'Gram-negativo', 'ESKAPE', 'Sexo', 'Idade'] + list(df_clean.columns[10:])
     groupby_column = st.selectbox('Que deseja verificar?', options)
     st.write(f"Seleção atual: {groupby_column}")
 
     # Filtrar o DataFrame com base na opção selecionada
     if groupby_column == 'Microorganismo':
         df_filtered = df_clean
-    elif groupby_column in ['Gram-positive', 'Gram-negative', 'ESKAPE']:
-        if groupby_column == 'Gram-positive':
-            relevant_microorganisms = gram_positive
-        elif groupby_column == 'Gram-negative':
-            relevant_microorganisms = gram_negative
+    elif groupby_column in ['Gram-positivo', 'Gram-negativo', 'ESKAPE']:
+        if groupby_column == 'Gram-positivo':
+            relevant_microorganisms = gram_positivo
+        elif groupby_column == 'Gram-negativo':
+            relevant_microorganisms = gram_negativo
         else:
             relevant_microorganisms = eskape_microorganisms
         df_filtered = df_clean[df_clean['Microorganismo'].isin(relevant_microorganisms)]
@@ -684,7 +684,7 @@ def process_and_plot_data(df_clean, gram_positive, gram_negative, eskape_microor
         df_filtered = df_clean[df_clean[groupby_column].notnull()]
 
     # Número de ocorrências para cada grupo
-    if groupby_column in ['Microorganismo', 'Gram-positive', 'Gram-negative', 'ESKAPE']:
+    if groupby_column in ['Microorganismo', 'Gram-positivo', 'Gram-negativo', 'ESKAPE']:
         data_counts = df_filtered['Microorganismo'].value_counts().reset_index()
         data_counts.columns = ['Microorganismo', 'Contagem']
     else:
@@ -1019,7 +1019,7 @@ if not df_cleaned.empty:
     elif page == "Verificação de Duplicados":
         check_duplicates(df_duplicates)
     elif page == "Distribuição e Frequência":
-        process_and_plot_data(df_cleaned, GRAM_POSITIVE, GRAM_NEGATIVE, RELEVANT_MICROORGANISMS)
+        process_and_plot_data(df_cleaned, GRAM_POSITIVO, GRAM_NEGATIVO, RELEVANT_MICROORGANISMS)
     elif page == "Filtros":
         multi_selection_filter(df)
 
