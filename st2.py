@@ -27,10 +27,10 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
-# Carregar o arquivo config.toml
+# Carregar  config.toml
 config_path = resource_path("config.toml")
 os.environ["STREAMLIT_CONFIG_FILE"] = config_path  
-# Função para encontrar uma porta livre
+# encontrar uma porta livre
 def find_free_port():
     """Find a free port automatically."""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -45,7 +45,7 @@ def is_port_in_use(port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         return s.connect_ex(('localhost', port)) == 0
 
-# Verificar se o Streamlit já está em execução
+
 def is_streamlit_running():
     """Check if Streamlit is already running using psutil."""
     for proc in psutil.process_iter(attrs=['pid', 'name', 'cmdline']):
@@ -57,11 +57,11 @@ def is_streamlit_running():
             continue
     return False
 
-# Função para abrir, quando o Streamlit estiver pronto
+
 def open_browser_once():
     """Opens the browser only once after the server is ready."""
     try:
-        # Esperar o servidor iniciar (máximo de 15 segundos)
+        # tempo para servidor iniciar (máximo de 15 segundos)
         for _ in range(15):
             try:
                 response = requests.get(STREAMLIT_URL)
@@ -71,7 +71,7 @@ def open_browser_once():
                     return
             except requests.ConnectionError:
                 time.sleep(1)  
-        logging.warning(f"Servidor não está pronto a tempo. Acesse manualmente: {STREAMLIT_URL}")
+        logging.warning(f"Servidor não está pronto a tempo. Aceda manualmente: {STREAMLIT_URL}")
     except Exception as e:
         logging.error(f"Erro ao abrir o navegador: {e}")
 
@@ -132,7 +132,7 @@ ANTIBIOTICS = [
     "Gentamicina (tópico)", "Imipenem/Relebactam"
 ]
 
-# Replace "Amphotericin B" with "Anfotericina"
+# mudar "Amphotericin B" com "Anfotericina"
 ANTIBIOTICS = ["Anfotericina B" if ab == "Amphotericin B" else ab for ab in ANTIBIOTICS]
 
 
@@ -237,7 +237,7 @@ def read_data(uploaded_file):
 
 
 def df_clean(df):
-    """Limpar e dispor os dados removendo as colunas com informação privada, modificar as datas, disposição e expor filtros."""
+    """Limpar e dispor os dados retirando as colunas com informação privada, modificar as datas, disposição e expor filtros."""
     try:
         # Convertendo a coluna 'Data Colheita' para datetime
         df['Data Colheita'] = pd.to_datetime(df['Data Colheita'], format='%d/%m/%Y', errors='coerce')
@@ -569,7 +569,7 @@ def process_and_plot_data(df_clean, gram_positivo, gram_negativo, eskape_microor
                  title=f'Quantidade de Antibióticos {opcao_visualizacao}')
     st.plotly_chart(fig)
 
-    # New section for percentage of isolates by patient sex and age group, by bacterial species
+    # percentagem de isolados por sexo e idade , por espécie bacteriana 
     st.subheader("Percentagem de isolados por sexo e grupo etário")
     microorganismo_filter = st.selectbox('Escolha o Microorganismo para detalhar (ou Todos):', ['Todos'] + df_clean['Microorganismo'].unique().tolist())
     
@@ -712,7 +712,7 @@ def process_and_plot_data(df_clean, gram_positivo, gram_negativo, eskape_microor
                  title=f'Quantidade de Antibióticos {opcao_visualizacao}')
     st.plotly_chart(fig)
 
-    # New section for percentage of isolates by patient sex and age group, by bacterial species
+    # Secção nova para a percentagem de isolados por sexo e grupo , por espécie bacteriana 
     st.subheader("Percentagem e total de isolados por sexo e grupo etário")
     microorganismo_filter = st.selectbox('Escolha o Microorganismo para detalhar (ou Todos):', ['Todos'] + df_clean['Microorganismo'].unique().tolist())
     
@@ -971,7 +971,7 @@ def multi_selection_filter(df):
         filtered_df = df[df['Microorganismo'].isin(selected_microorganisms)][['Microorganismo'] + selected_antibiotics]
         st.write(filtered_df)
         
-        # Plotar Gráficos de Pizza
+        # Plot Gráficos círculo
         for antibiotic in selected_antibiotics:
             counts = filtered_df[antibiotic].value_counts().reset_index()
             counts.columns = ['Resposta', 'Contagem']
@@ -982,7 +982,7 @@ def multi_selection_filter(df):
 
 
 
-# Main Streamlit app
+# o Core 
 st.set_page_config(layout='wide', initial_sidebar_state='expanded')
 st.title('🧫Ferramenta de apoio à Microbiologia do ULSRA')
 st.header("💊 Uso exclusivo do Serviço ")
