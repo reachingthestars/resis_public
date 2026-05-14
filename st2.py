@@ -231,6 +231,24 @@ def read_data(uploaded_file):
         df = pd.read_excel(uploaded_file)
         sensitive_columns = ['Nº Benef.', 'Nº SNS', 'Data Nasc.', 'Nome']
         df.drop(columns=sensitive_columns, errors='ignore', inplace=True)
+        name_mapping = {
+    r'Enterococcus faecium.*': 'Enterococcus faecium',
+    r'Enterococcus faecalis.*': 'Enterococcus faecalis',
+    r'Staphylococcus aureus.*': 'Staphylococcus aureus',
+    r'Staphylococcus epidermidis.*': 'Staphylococcus epidermidis',
+    r'Klebsiella pneumoniae.*': 'Klebsiella pneumoniae',
+    r'Escherichia coli.*': 'Escherichia coli',
+    r'Pseudomonas aeruginosa.*': 'Pseudomonas aeruginosa',
+    r'Acinetobacter baumannii.*': 'Acinetobacter baumannii',
+    r'Enterobacter.*': 'Enterobacter species',
+    r'Citrobacter.*': 'Citrobacter species',
+    r'Salmonella.*': 'Salmonella species',
+    r'Providencia.*': 'Providencia species',
+}
+for pattern, replacement in name_mapping.items():
+    df['Microorganismo'] = df['Microorganismo'].str.replace(
+        pattern, replacement, regex=True, case=False
+    )
         return df, None
     except Exception as e:
         return None, str(e)
