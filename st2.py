@@ -244,8 +244,9 @@ def df_clean(df):
         df.sort_values(by=['Nº Processo', 'Microorganismo', 'Data Colheita'], inplace=True)
         
         # Combinando colunas de antibióticos em uma única string
-        df['Antibiotics'] = df.iloc[:, 23:].apply(lambda row: '_'.join(row.astype(str)), axis=1)
         
+        df['Antibiotics'] = df.iloc[:, 23:].apply(lambda row: '_'.join(row.fillna('').astype(str)), axis=1
+)
         # Calculando a diferença de dias entre as colheitas
         df['Difference'] = df.groupby(['Nº Processo', 'Microorganismo'])['Data Colheita'].diff().abs().dt.days
         
@@ -419,8 +420,7 @@ def calculate_resistance(df_cleaned):
     if not result_df.empty:
         result_df = result_df.pivot(index=['Gram_Stain', 'Microorganismo'], columns='Antibiotic', values='Resistance')
         
-        result_df = result_df.applymap(lambda x: '{:.1f}'.format(x).rstrip('0').rstrip('.') if pd.notnull(x) else x)
-
+        result_df = result_df.map(lambda x: '{:.1f}'.format(x).rstrip('0').rstrip('.') if pd.notnull(x) else x)
     return result_df
 
 def highlight_resistance(val):
