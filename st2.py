@@ -1005,7 +1005,7 @@ if not df_cleaned.empty:
     st.write("Perfil de resistência por microorganismo e antibótico:")
     
     if not resistance_data.empty:
-        styled_data = resistance_data.style.applymap(highlight_resistance)
+        styled_data = resistance_data.style.map(highlight_resistance)
         st.dataframe(styled_data)
 
    
