@@ -233,13 +233,15 @@ def read_data(uploaded_file):
 
         for col in df.columns:
                 if "Piperacillina" in col:
-        COLUMN_MAPPING[col] = "Piperacillina/Tazobactam"
+                    COLUMN_MAPPING[col] = "Piperacillina/Tazobactam"
 
                 if "Ceftriax" in col:
-        COLUMN_MAPPING[col] = "Ceftriaxona"
+                    COLUMN_MAPPING[col] = "Ceftriaxona"
+
+        df.rename(columns=COLUMN_MAPPING, inplace=True)
         # Limpeza dos nomes das colunas
         df.columns = (df.columns.str.strip().str.replace(r'\s+', ' ', regex=True).str.replace(';', '', regex=False).str.replace('\n', '', regex=False))
-        df.rename(columns=COLUMN_MAPPING, inplace=True)
+       
 
         sensitive_columns = ['Nº Benef.', 'Nº SNS', 'Data Nasc.', 'Nome']
         df.drop(columns=sensitive_columns, errors='ignore', inplace=True)
