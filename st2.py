@@ -230,10 +230,14 @@ def read_data(uploaded_file):
         df = pd.read_excel(uploaded_file)
 
         # NORMALIZAÇÃO DOS NOMES DAS COLUNAS
-        COLUMN_MAPPING = {
-            "Piperacillina/tazobactam": "Piperacillina/Tazobactam",
-            "Ceftriaxone": "Ceftriaxona"
-        }
+        COLUMN_MAPPING = {}
+
+for col in df.columns:
+    if "Piperacillina" in col:
+        COLUMN_MAPPING[col] = "Piperacillina/Tazobactam"
+
+    if "Ceftriax" in col:
+        COLUMN_MAPPING[col] = "Ceftriaxona"
         # Limpeza dos nomes das colunas
         df.columns = (df.columns.str.strip().str.replace(r'\s+', ' ', regex=True).str.replace(';', '', regex=False).str.replace('\n', '', regex=False))
         df.rename(columns=COLUMN_MAPPING, inplace=True)
