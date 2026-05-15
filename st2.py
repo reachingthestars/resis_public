@@ -119,7 +119,7 @@ ANTIBIOTICS = [
     "Cefuroxima - Axetil", "Cefuroxima - Sódica", "Cloranfenicol", "Ciprofloxacina",
     "Clindamicina", "Doxycycline", "Eritromicina", "Fosfomicina", "Ácido Fusídico",
     "Gentamicina", "Gentamicina (alta concentr.)", "Imipenem", "Meropenem",
-    "Nitrofurantoína", "Oxacillin MIC", "Penicillina", "Piperacillina/tazobactam",
+    "Nitrofurantoína", "Oxacillin MIC", "Penicillina", "Piperacillina/Tazobactam",
     "Rifampicina", "Estreptomicina (alta concentr.)", "Teicoplanina", "Tetraciclina",
     "Tobramicina", "Cotrimoxazol", "Vancomicina", "Levofloxacina",
     "Quinupristina/Dalfopristina", "Oxacillina", "Mupirocina", "Linezolid",
@@ -191,7 +191,7 @@ AMINOGLICOSIDEOS = [
 BETA_LACTAMICOS_INIBIDORES = [
     'Amoxicillina/Ac. Clavulânico',
     'Ampicillina/sulbactam',
-    'Piperacillina/tazobactam',
+    'Piperacillina/Tazobactam',
     'Ceftolozane/Tazobactam',
     'Ceftazidime/Avibactam',
     'Imipenem/Relebactam'
@@ -204,7 +204,7 @@ ANTIBIOTIC_CLASSES = {
     "Aminoglicosídeos": ["Amicacina", "Gentamicina", "Gentamicina (alta concentr.)", "Tobramicina"],
     "Beta-lactâmicos": ["Amoxicillina/Ac. Clavulânico", "Ampicillina", "Ampicillina/sulbactam", "Aztreonam",
                         "Cefepima", "Cefotaxima", "Ceftazidima", "Ceftriaxona", "Cefuroxima", "Cefuroxima - Axetil",
-                        "Cefuroxima - Sódica", "Oxacillin MIC", "Oxacillina", "Penicillina", "Piperacillina/tazobactam",
+                        "Cefuroxima - Sódica", "Oxacillin MIC", "Oxacillina", "Penicillina", "Piperacillina/Tazobactam",
                         "Imipenem", "Meropenem", "Ertapenem", "Ceftolozane/Tazobactam", "Ceftazidime/Avibactam",
                         "Imipenem/Relebactam"],
     "Glicopeptídeos": ["Teicoplanina", "Vancomicina"],
