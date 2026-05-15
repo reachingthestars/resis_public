@@ -228,8 +228,19 @@ def read_data(uploaded_file):
     """Ler e processar dados do Excel."""
     try:
         df = pd.read_excel(uploaded_file)
+
+        # NORMALIZAÇÃO DOS NOMES DAS COLUNAS
+        COLUMN_MAPPING = {
+            "Piperacillina/tazobactam": "Piperacillina/Tazobactam",
+            "Ceftriaxone": "Ceftriaxona"
+        }
+
+        df.columns = df.columns.str.strip()
+        df.rename(columns=COLUMN_MAPPING, inplace=True)
+
         sensitive_columns = ['Nº Benef.', 'Nº SNS', 'Data Nasc.', 'Nome']
         df.drop(columns=sensitive_columns, errors='ignore', inplace=True)
+
         name_mapping = {
             r'Enterococcus faecium.*': 'Enterococcus faecium',
             r'Enterococcus faecalis.*': 'Enterococcus faecalis',
@@ -244,14 +255,16 @@ def read_data(uploaded_file):
             r'Salmonella.*': 'Salmonella species',
             r'Providencia.*': 'Providencia species',
         }
+
         for pattern, replacement in name_mapping.items():
             df['Microorganismo'] = df['Microorganismo'].str.replace(
                 pattern, replacement, regex=True, case=False
             )
+
         return df, None
+
     except Exception as e:
         return None, str(e)
-        
 
 
 def df_clean(df):
