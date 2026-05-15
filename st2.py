@@ -234,8 +234,8 @@ def read_data(uploaded_file):
             "Piperacillina/tazobactam": "Piperacillina/Tazobactam",
             "Ceftriaxone": "Ceftriaxona"
         }
-
-        df.columns = df.columns.str.strip()
+        # Limpeza dos nomes das colunas
+        df.columns = (df.columns.str.strip().str.replace(r'\s+', ' ', regex=True).str.replace(';', '', regex=False).str.replace('\n', '', regex=False))
         df.rename(columns=COLUMN_MAPPING, inplace=True)
 
         sensitive_columns = ['Nº Benef.', 'Nº SNS', 'Data Nasc.', 'Nome']
